@@ -33,13 +33,13 @@ to_y = 0
 character_speed = 0.5
 
 # F학점 만들기
-ddong = pygame.image.load("C:\\Users\\윤제\\OneDrive\\바탕 화면\\Pythonworkspace\\pygame_basic\\fgrade.png")
-ddong_size = ddong.get_rect().size
-ddong_width = ddong_size[0] # 가로크기
-ddong_height = ddong_size[1] # 세로크기
-ddong_x_pos = random.randint(0, screen_width - ddong_width)
-ddong_y_pos = 0
-ddong_speed = 0.5
+fgrade = pygame.image.load("C:\\Users\\윤제\\OneDrive\\바탕 화면\\Pythonworkspace\\pygame_basic\\fgrade.png")
+fgrade_size = fgrade.get_rect().size
+fgrade_width = fgrade_size[0] # 가로크기
+fgrade_height = fgrade_size[1] # 세로크기
+fgrade_x_pos = random.randint(0, screen_width - fgrade_width)
+fgrade_y_pos = 0
+fgrade_speed = 0.5
 
 
 # 폰트 정의
@@ -81,35 +81,29 @@ while running:
     elif character_x_pos > screen_width - character_width:
         character_x_pos = screen_width - character_width
 
-    # 세로 경계값 처리
-    if character_y_pos < 0 :
-        character_y_pos = 0
-    elif character_y_pos > screen_height - character_height:
-        character_y_pos = screen_height - character_height
+    fgrade_y_pos += fgrade_speed*dt
 
-    ddong_y_pos += ddong_speed*dt
-
-    if ddong_y_pos > screen_height:
-        ddong_y_pos = 0
-        ddong_x_pos = random.randint(0, screen_width - ddong_width)
+    if fgrade_y_pos > screen_height:
+        fgrade_y_pos = 0
+        fgrade_x_pos = random.randint(0, screen_width - fgrade_width)
 
     # 충돌 처리
     character_rect = character.get_rect()
     character_rect.left = character_x_pos
     character_rect.top = character_y_pos
 
-    ddong_rect = ddong.get_rect()
-    ddong_rect.left = ddong_x_pos
-    ddong_rect.top = ddong_y_pos
+    fgrade_rect = fgrade.get_rect()
+    fgrade_rect.left = fgrade_x_pos
+    fgrade_rect.top = fgrade_y_pos
     
     # 충돌체크
-    if character_rect.colliderect(ddong_rect):
+    if character_rect.colliderect(fgrade_rect):
         print("충돌했어요")
         running = False
 
     screen.blit(background, (0,0)) # 배경 그리기
     screen.blit(character,(character_x_pos, character_y_pos)) # 캐릭터 그리기
-    screen.blit(ddong, (ddong_x_pos, ddong_y_pos))
+    screen.blit(fgrade, (fgrade_x_pos, fgrade_y_pos))
 
     # 타이머 집어넣기
     # 경과 시간 계산
@@ -121,9 +115,9 @@ while running:
 
     # 10초 단위로 난이도 상승 (F가 떨어지는 속도 상승)
     if total_time - elapsed_time <= 20:
-        ddong_speed = 0.8
+        fgrade_speed = 0.8
     elif total_time - elapsed_time <= 10:
-        ddong_speed = 1.0
+        fgrade_speed = 1.0
 
     # 만약 시간이 0 이하면 게임 종료
     if total_time - elapsed_time <= 0:
