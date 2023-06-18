@@ -54,6 +54,7 @@ start_ticks = pygame.time.get_ticks()
 # 이벤트 루프
 running = True # 게임이진행중인지?
 while running:
+    
     dt = clock.tick(60) 
     for event in pygame.event.get(): # 무슨 이벤트가 발생하는지?
         if event.type == pygame.QUIT: # 창이 닫히는 이벤트가 발생하였는가?
@@ -117,6 +118,12 @@ while running:
     timer = game_font.render(str(int(total_time - elapsed_time)), True, (255,255,255))
     # 출력할 글자, True, 글자 생상
     screen.blit(timer, (10,10))
+
+    # 10초 단위로 난이도 상승 (F가 떨어지는 속도 상승)
+    if total_time - elapsed_time <= 20:
+        ddong_speed = 0.8
+    elif total_time - elapsed_time <= 10:
+        ddong_speed = 1.0
 
     # 만약 시간이 0 이하면 게임 종료
     if total_time - elapsed_time <= 0:
